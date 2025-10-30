@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../controllers/auth.dart';
-import '../controllers/roommate.dart';
-import '../controllers/task.dart';
-import '../models/roommate.dart';
+import '../controllers/auth_controller.dart';
+import '../controllers/roommate_controller.dart';
+import '../controllers/task_controller.dart';
+import '../models/roommate_model.dart';
 
 class AdminView extends StatelessWidget {
   const AdminView({super.key});

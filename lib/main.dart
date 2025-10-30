@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:home_sync/views/signup.dart';
+import 'package:home_sync/views/signup_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'core/supabase.dart';
-import 'controllers/auth.dart';
-import 'controllers/roommate.dart';
-import 'controllers/task.dart';
-import 'controllers/health.dart';
-import 'views/login.dart';
-import 'views/admin.dart';
-import 'views/roommate.dart';
+import 'controllers/auth_controller.dart';
+import 'controllers/roommate_controller.dart';
+import 'controllers/task_controller.dart';
+import 'controllers/health_controller.dart';
+import 'views/login_view.dart';
+import 'views/admin_view.dart';
+import 'views/roommate_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

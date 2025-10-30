@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../controllers/auth.dart';
-import '../controllers/task.dart';
-import '../controllers/health.dart';
+import '../controllers/auth_controller.dart';
+import '../controllers/health_controller.dart';
+import '../controllers/task_controller.dart';
+import '../widgets/dialogs/health_dilaog.dart';
 
 class RoommateView extends StatefulWidget {
   const RoommateView({super.key});
@@ -19,9 +20,9 @@ class _RoommateViewState extends State<RoommateView> {
   void initState() {
     super.initState();
     final h = Get.find<HealthCtrl>();
-    if (h.show) {
+    // if (h.show) {
       WidgetsBinding.instance.addPostFrameCallback((_) => _showHealthDialog());
-    }
+    // }
   }
 
   void _showHealthDialog() {
@@ -30,155 +31,10 @@ class _RoommateViewState extends State<RoommateView> {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) => Dialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-        child: Container(
-          padding: const EdgeInsets.all(32),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(24),
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                Colors.purple.shade50,
-                Colors.pink.shade50,
-              ],
-            ),
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // Icon
-              Container(
-                width: 80,
-                height: 80,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [Colors.deepPurple, Colors.purple.shade300],
-                  ),
-                  shape: BoxShape.circle,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.purple.withOpacity(0.3),
-                      blurRadius: 20,
-                      offset: const Offset(0, 10),
-                    ),
-                  ],
-                ),
-                child: const Icon(Icons.favorite_rounded, size: 40, color: Colors.white),
-              ),
-              const SizedBox(height: 24),
-
-              // Title
-              Text(
-                'How are you today?',
-                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.grey.shade800,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 12),
-              Text(
-                'Let us know your current status',
-                style: TextStyle(color: Colors.grey.shade600, fontSize: 15),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 32),
-
-              // Health Options
-              _buildHealthOption(
-                icon: Icons.sentiment_very_satisfied_rounded,
-                label: 'Healthy',
-                color: Colors.green,
-                onTap: () {
-                  h.checkIn('healthy');
-                  Navigator.pop(context);
-                },
-              ),
-              const SizedBox(height: 12),
-              _buildHealthOption(
-                icon: Icons.sick_rounded,
-                label: 'Sick',
-                color: Colors.orange,
-                onTap: () {
-                  h.checkIn('sick');
-                  Navigator.pop(context);
-                },
-              ),
-              const SizedBox(height: 12),
-              _buildHealthOption(
-                icon: Icons.work_off_rounded,
-                label: 'Busy',
-                color: Colors.blue,
-                onTap: () {
-                  h.checkIn('busy');
-                  Navigator.pop(context);
-                },
-              ),
-              const SizedBox(height: 12),
-              _buildHealthOption(
-                icon: Icons.flight_takeoff_rounded,
-                label: 'Away',
-                color: Colors.purple,
-                onTap: () {
-                  h.checkIn('away');
-                  Navigator.pop(context);
-                },
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildHealthOption({
-    required IconData icon,
-    required String label,
-    required Color color,
-    required VoidCallback onTap,
-  }) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(16),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: Colors.grey.shade200),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.05),
-              blurRadius: 8,
-              offset: const Offset(0, 2),
-            ),
-          ],
-        ),
-        child: Row(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: color.withOpacity(0.1),
-                shape: BoxShape.circle,
-              ),
-              child: Icon(icon, color: color, size: 28),
-            ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: Text(
-                label,
-                style: const TextStyle(
-                  fontSize: 17,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-            Icon(Icons.arrow_forward_ios, size: 18, color: Colors.grey.shade400),
-          ],
-        ),
+      builder: (context) => HealthStatusDialog(
+        onStatusSelected: (status) {
+          h.checkIn(status);
+        },
       ),
     );
   }

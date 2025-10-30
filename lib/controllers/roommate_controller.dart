@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import '../models/roommate.dart';
+import '../models/roommate_model.dart';
 import '../core/supabase.dart';
 
 class RoommateCtrl extends GetxController {

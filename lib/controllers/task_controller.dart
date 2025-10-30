@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
-import '../models/task.dart';
+import '../models/task_model.dart';
 import '../core/supabase.dart';
-import 'roommate.dart';
+import 'roommate_controller.dart';
 
 class TaskCtrl extends GetxController {
   final tasks = <Task>[].obs;
