@@ -34,6 +34,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return DynamicColorBuilder(builder: (light, dark) {
       return GetMaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Roommate Tasks',
         theme: _buildTheme(light ?? _fallbackLight, Brightness.light),
         darkTheme: _buildTheme(dark ?? _fallbackDark, Brightness.dark),
